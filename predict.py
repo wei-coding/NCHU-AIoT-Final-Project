@@ -36,6 +36,4 @@ def get_predict(model_path, music_path):
     x = get_x(music_path)
     y = model.predict(x)
     print(f'y = {y}')
-    r = [float(y[0, i] * 100) for i in range(9)]
-    data = {'filename': music_path, 'gernes': r}
-    return data
+    return [float(y[0, i] * 100) for i in range(9)]
