@@ -4,11 +4,8 @@ import predict
 import random
 
 app = Flask(__name__)
-
 app.config['UPLOAD_FOLDER'] = 'data'
-app.config['MAX_CONTENT_LENGTH'] = 10 * 1000 * 1000
-
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok = True)
+app.config['MAX_CONTENT_LENGTH'] = 32 * 1000 * 1000     # max file 32MB
 
 @app.route('/')
 def index():
@@ -19,6 +16,10 @@ def uploader():
     if request.method == 'POST':
         f = request.files['file']
         _, extname = os.path.splitext(f.filename)
+        
+        # make dir if we do not have data folder
+        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
         # generate random string to handle the filename which has some characters not in UTF8
         domain = list('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789')
         fn = app.config['UPLOAD_FOLDER'] + '/' + ''.join(random.choices(domain, k=10)) + extname

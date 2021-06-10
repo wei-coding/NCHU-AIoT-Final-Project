@@ -24,7 +24,7 @@ document.getElementById('uploader').addEventListener('click', ()=>{
         }).then((res) => {
             console.log(res);
             if(res.status == 413){
-                throw new Error("HTTP 413 檔案太大惹 (´◓Д◔`)");
+                throw new Error("HTTP 413 檔案太大惹，不可超過 32 MB(´◓Д◔`)");
             }else if(res.status != 200){
                 throw new Error(`Error HTTP ${res.status}`);
             }else{
