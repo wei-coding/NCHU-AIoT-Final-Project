@@ -1,3 +1,51 @@
+// material design
+// nav bar
+const MDCTopAppBar = mdc.topAppBar.MDCTopAppBar;
+const MDCRipple = mdc.ripple.MDCRipple;
+const MDCSnackbar = mdc.snackbar.MDCSnackbar;
+
+MDCTopAppBar.attachTo(document.getElementById('app-bar'));
+
+const mySnackBar = MDCSnackbar.attachTo(document.querySelector('.mdc-snackbar'));
+const uploadButton = new MDCRipple(document.getElementById('uploader'));
+document.getElementById('uploader').addEventListener('click', ()=>{
+    let fileDOM = document.createElement('input');
+    fileDOM.setAttribute('type', 'file');
+    fileDOM.setAttribute('accepct', 'audio/*');
+    fileDOM.addEventListener('change', (e) => {
+        const files = e.target.files;
+        const formData = new FormData();
+        formData.append('file', files[0]);
+        document.getElementById('chart').innerHTML = '<div class="loader"></div>';
+        document.getElementById('center-wrapper').style.display = 'none';
+        fetch('/uploader', {
+            method: 'POST',
+            body: formData
+        }).then((res) => {
+            console.log(res);
+            if(res.status == 413){
+                throw new Error("HTTP 413 檔案太大惹 (´◓Д◔`)");
+            }else if(res.status != 200){
+                throw new Error(`Error HTTP ${res.status}`);
+            }else{
+                try {
+                    return res.json();
+                } catch (e) {
+                    alert('Error: ' + e);
+                }
+            }
+        }).then((data) => {
+            console.log(data);
+            highchartsinit(data.filename, data.gernes);
+        }).catch((error) => {
+            mySnackBar.labelText = `Error ${error}`;
+            mySnackBar.open();
+            console.log(error);
+        });
+    }, false);
+    fileDOM.click();
+}, false);
+
 function highchartsinit(fn, gernes) {
     Highcharts.chart('chart', {
         chart: {
@@ -48,26 +96,3 @@ function highchartsinit(fn, gernes) {
         ]
     })
 }
-
-document.getElementById('file-upload').addEventListener('change', (e) => {
-    const files = e.target.files;
-    const formData = new FormData();
-    formData.append('file', files[0]);
-    
-    fetch('/uploader', {
-        method: 'POST',
-        body: formData
-    }).then((res) => {
-        console.log(res);
-        try{
-            return res.json();
-        }catch(e){
-            alert('Error: '+e);
-        }
-    }).then((data) => {
-        console.log(data);
-        highchartsinit(data.filename, data.gernes);
-    }).catch(
-        error => console.log(error) // Handle the error response object
-    );
-}, false);
