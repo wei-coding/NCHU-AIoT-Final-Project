@@ -1,39 +1,38 @@
-from flask import Flask, request, render_template, url_for, jsonify, redirect
-from werkzeug.utils import secure_filename
+from flask import Flask, request, render_template, jsonify, send_from_directory
 import os
 import predict
+import random
 
 app = Flask(__name__)
 
-app.config['UPLOAD_FOLDER'] = os.path.join('data')
+app.config['UPLOAD_FOLDER'] = 'data'
 app.config['MAX_CONTENT_LENGTH'] = 10 * 1000 * 1000
 
-filepath = None
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok = True)
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/uploader', methods=['GET', 'POST'])
+@app.route('/uploader', methods=['POST'])
 def uploader():
-    global filepath
     if request.method == 'POST':
         f = request.files['file']
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename))
-        f.save(filepath)
-        return redirect(url_for('result'))
+        _, extname = os.path.splitext(f.filename)
+        # generate random string to handle the filename which has some characters not in UTF8
+        domain = list('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789')
+        fn = app.config['UPLOAD_FOLDER'] + '/' + ''.join(random.choices(domain, k=10)) + extname
+        f.save(fn)
 
-@app.route('/getpredict')
-def getpredict():
-    global filepath
-    predict.load_model('lstm_genre_classifier_lstm.h5')
-    r = predict.get_predict(filepath)
-    print(f'result is {r}')
-    return jsonify(r)
+        return jsonify({
+            'filename': f.filename,
+            'gernes': predict.get_predict('lstm_genre_classifier_lstm.h5', fn)
+        })
 
-@app.route('/result')
-def result():
-    return render_template('charts.html')
+# this is for static files
+@app.route('/statics/<path:path>')
+def send_js(path):
+    return send_from_directory('statics', path)
 
 if __name__ == '__main__':
     app.run(debug=True)
