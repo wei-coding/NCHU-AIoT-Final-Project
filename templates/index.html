@@ -3,12 +3,42 @@
    <head>
       <meta charset="utf-8" />
       <title>Music Genre Recognition</title>
-      <!--highcharts-->
+      <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel="stylesheet" href="/static/css/main.css?20210603">
+      <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+      <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
       <script src="https://code.highcharts.com/highcharts.src.js"></script>
       <script src="/static/js/main.js" defer></script>
    </head>
    <body>
-      <input type="file" name="file" id="file-upload">
-      <div id="chart"></div>
+      <header class="mdc-top-app-bar mdc-top-app-bar--fixed" id="app-bar">
+         <div class="mdc-top-app-bar__row">
+         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+            <span class="mdc-top-app-bar__title">音樂風格辨識</span>
+         </section>
+         </div>
+      </header>
+      <main class="mdc-top-app-bar--fixed-adjust routing-content">
+         <div id="center-wrapper">
+            <button class="mdc-button mdc-button--raised" id="uploader">
+               <span class="mdc-button__ripple"></span>
+               <i class="material-icons mdc-button__icon" aria-hidden="true">upload</i>
+               <span class="mdc-button__label">Upload a music file</span>
+            </button>
+         </div>
+         <div id="chart"></div>
+      </main>
+      <div class="mdc-snackbar">
+         <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+            <div class="mdc-snackbar__label" aria-atomic="false"></div>
+            <!--div class="mdc-snackbar__actions" aria-atomic="true">
+               <button type="button" class="mdc-button mdc-snackbar__action">
+                  <div class="mdc-button__ripple"></div>
+                  <span class="mdc-button__label">Refresh</span>
+               </button>
+            </div-->
+         </div>
+      </div>
    </body>
 </html>
