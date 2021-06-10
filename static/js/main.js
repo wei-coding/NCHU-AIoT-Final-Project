@@ -11,7 +11,7 @@ const uploadButton = new MDCRipple(document.getElementById('uploader'));
 document.getElementById('uploader').addEventListener('click', ()=>{
     let fileDOM = document.createElement('input');
     fileDOM.setAttribute('type', 'file');
-    fileDOM.setAttribute('accepct', 'audio/*');
+    fileDOM.setAttribute('accept', 'audio/*');
     fileDOM.addEventListener('change', (e) => {
         const files = e.target.files;
         const formData = new FormData();
