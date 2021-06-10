@@ -1,0 +1,6 @@
+gtzan/_*
+gtzan/archive.zip
+__pycache__
+.vscodes
+venv
+data
