@@ -45,7 +45,7 @@ def predict_gui():
 @app.route('/music', methods=['GET'])
 def music():
     filename = request.args.get('filename')
-    return redirect('http://had.name/data/aiot/' + filename + '.mp3')
+    return redirect('https://had.name/data/aiot/' + filename + '.mp3')
     # return send_from_directory('statics/music', path = filename + '.mp3')
 
 
@@ -60,7 +60,7 @@ def prediction():
     else:
         return jsonify({
             'filename': song.replace('-', ' '),
-            'url': '/music?filename=' + song
+            'url': 'https://had.name/data/aiot/' + song + '.mp3'
         })
 
 if __name__ == '__main__':
