@@ -1,3 +1,2 @@
-librosa
-tensorflow-gpu
 numpy
+flask
