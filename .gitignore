@@ -1,6 +1,7 @@
 gtzan/_*
 gtzan/archive.zip
 __pycache__
-.vscodes
+.vscode
 venv
 data
+*.mp3

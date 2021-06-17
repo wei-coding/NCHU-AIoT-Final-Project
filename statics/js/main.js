@@ -36,7 +36,7 @@ document.getElementById('uploader').addEventListener('click', ()=>{
             }
         }).then((data) => {
             console.log(data);
-            highchartsinit(data.filename, data.gernes);
+            highchartsinit(data.filename, data.genres);
         }).catch((error) => {
             mySnackBar.labelText = `Error ${error}`;
             mySnackBar.open();
@@ -91,7 +91,7 @@ function highchartsinit(fn, gernes) {
         series: [
             {
                 name: fn,
-                data: gernes,
+                data: genres,
             }
         ]
     })
