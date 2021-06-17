@@ -45,7 +45,7 @@ def predict_gui():
 @app.route('/music', methods=['GET'])
 def music():
     filename = request.args.get('filename')
-    return redirect('http://keras.myftp.org/MyWeb/public/aiot/music/' + filename + '.mp3')
+    return redirect('http://had.name/data/aiot/' + filename + '.mp3')
     # return send_from_directory('statics/music', path = filename + '.mp3')
 
 
