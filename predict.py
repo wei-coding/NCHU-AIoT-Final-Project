@@ -91,6 +91,14 @@ def recommend_music(mood: int):
     load_model('model')
     max_prob = 0.0
     selected_genre = 'blues'
+    f = open('statics/music/data.json')
+    song_data: dict = json.load(f)
+    f.close()
+    if mood == -1:
+        # randomize all music
+        print('random mode')
+        selected_song = random.sample(song_data.keys(), 1)[0]
+        return selected_song, None
     print(given_mood_prob[moods[mood]])
     for g, p in given_mood_prob[moods[mood]].items():
         if g == 'total':
@@ -101,8 +109,6 @@ def recommend_music(mood: int):
     print('genre =', selected_genre)
     # select song with {candidate} genre
     all_fit_song = []
-    f = open('statics/music/data.json')
-    song_data = json.load(f)
     for song, genre in song_data.items():
         maxi = np.argmax(genre)
         if selected_genre == genres[maxi]:
