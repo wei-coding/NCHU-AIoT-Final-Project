@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, jsonify, send_from_directory,
 import os
 
 from werkzeug.utils import redirect
-import predict
+from src import predict
 import random
 
 app = Flask(__name__)
@@ -29,7 +29,7 @@ def uploader():
 
         return jsonify({
             'filename': f.filename,
-            'genres': predict.get_predict('lstm_genre_classifier_lstm.h5', fn)
+            'genres': predict.get_predict('models/lstm_genre_classifier_lstm.h5', fn)
         })
 
 # this is for static files

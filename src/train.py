@@ -79,4 +79,4 @@ print("Test accuracy:  ", accuracy)
 # Creates a HDF5 file 'lstm_genre_classifier.h5'
 model_filename = "lstm_genre_classifier_lstm_dense.h5"
 print("\nSaving model: " + model_filename)
-model.save(model_filename)
+model.save('../models/' + model_filename)
