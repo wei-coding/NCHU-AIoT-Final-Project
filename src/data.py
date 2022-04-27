@@ -19,7 +19,6 @@ class GenreFeatureData:
         "pop",
         "reggae",
         "rock",
-        
     ]
 
     dir_trainfolder = "./gtzan/_train"
